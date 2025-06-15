@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Página Dinâmica com Tailwind</title>
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+
+    <!-- Menu de Navegação -->
+    <nav class="bg-gray-800 p-4">
+      <div class="container mx-auto flex justify-between items-center">
+        <a class="text-white font-bold text-xl" href="#">Meu Site</a>
+        <div>
+          <a class="text-gray-300 hover:text-white mx-2" href="#">Início</a>
+        </div>
+      </div>
+    </nav>
+    <!--Formulario de Cadastro-->
+    <div class="container mx-auto mt-8 p-4">
+      <h2 class="text-2xl font-bold mb-4">Cadastro de Livros</h2>
+      <form id="formCadastro" class="bg-white shadow-md rounded p-4" onsubmit="cadastrar()">
+        <div class="mb-4">
+          <label for="titulo" class="block text-gray-700 font-bold mb-2">Titulo</label>
+          <input type="text" id="titulo" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+          <label for="autor" class="block text-gray-700 font-bold mb-2">Autor</label>
+          <input type="text" id="autor" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-10">
+            <label for="genero" class="block text-gray-700 font-bold mb-2">Genero</label> 
+            <select id="genero" name="genero" class="w-full px-3 py-2 border rounded" required>
+                <option value=""> Selecione </option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="status" class="block text-gray-700 font-bold mb-2">Status</label> 
+            <select id="status" name="status"  class="w-full px-3 py-2 border rounded" required>
+                <option value="">Selecione</option>
+            </select>
+        </div>
+        <div class="mb-4">
+             <label for="data_cadastro" class="block text-gray-700 font-bold mb-2">Data_Cadastro</label>
+            <input type="date" id="data" class="w-full px-3 py-2 border rounded" required>
+        </div>
+        <div class="mb-4">
+            <label for="bibliotecario" class="block text-gray-700 font-bold mb-2">Bibliotecario</label>
+            <input type="text" id="bibliotecario" value= "${bibliotecario}" class="px-3 py-2 border rounded required">
+
+        </div>
+        
+        <button type="submit"  class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Adicionar</button>
+      </form>
+      <!--Tabela de Ca-->
+      <h2 class="text-2xl font-bold mt-8 mb-4">Tabela de Livros</h2>
+      <table  class="w-full table-auto bg-white shadow-md rounded">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="px-4 py-2">ID</th>
+            <th class="px-4 py-2">Titulo</th>
+            <th class="px-4 py-2">Autor</th>
+            <th class="px-4 py-2">Genero</th>
+            <th class="px-4 py-2">Status</th>
+            <th class="px-4 py-2">Bibliotecario</th>
+            <th class="px-4 py-2">Data_Cadastro</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaLivros">
+          <!-- Linhas dinâmicas aqui -->
+        </tbody>
+      </table>
+    </div>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./Livros.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  </body>
+</html>
