@@ -7,7 +7,7 @@ function limparCampos() {
     document.getElementById('titulo').value = '';
     document.getElementById('autor').value = '';
     document.getElementById('genero').value = '';
-    document.getElementById('status').value = '';
+    document.getElementById('status').selectIndex = 0;
     document.getElementById('bibliotecario').value = '';
     document.getElementById('data').value = '';
 }
@@ -22,6 +22,7 @@ function limparCampos() {
     })
     .then(response => response.json())
     .then(data => {
+      data.sort((a,b) => a.id - b.id);
       addlinha(data);
     })
     .catch(error => {
@@ -40,6 +41,11 @@ function carregarStatus() {
                 option.text = status;
                 select.appendChild(option);
             });
+            if(data.includes("DISPONIVEL")){
+              select.value = "DISPONIVEL";
+            }else if(data.length > 0){
+              select.value = data[0];
+            }
         })
         .catch(error => console.error('Erro ao carregar status:', error));
 }
@@ -56,6 +62,14 @@ function carregarGeneros() {
         })
         .then(data => {
             const selectGenero = document.getElementById('genero');
+            selectGenero.innerHTML='';
+
+            const optionVazio = document.createElement('option');
+            optionVazio.value = '';
+            optionVazio.text = 'Selecione o gênero';
+            optionVazio.disabled = true;
+            optionVazio.selected = true;
+            selectGenero.appendChild(optionVazio);
             data.forEach(genero => {
                 const option = document.createElement('option');
                 option.value = genero;
@@ -99,10 +113,12 @@ function verificarBibliotecario(){
               <td class="px-4 py-2">${element.autor}</td>
               <td class="px-4 py-2">${element.genero.replace(carregarGeneros())}</td>
               <td class="px-4 py-2">${element.status.replace(carregarStatus)}</td>
-             <td class="px-4 py-2">${element.bibliotecario ? element.bibliotecario.nome : 'Não informado'}</td>
+              <td class="px-4 py-2">${element.bibliotecario ? element.bibliotecario.nome : 'Não informado'}</td>
               <td class="px-4 py-2">${element.data_cadastro}</td>
-              <td class="px-4 py-2"><button  class="bg-red-500 text-white px-2 py-1 rounded" onclick="remover(this,${element.id} )">remover</button>
-              <button class ="bg-green-500 text-black px-2 py-1 rounded" onclick="editar(this, event,${element.id} )">editar</button></td>
+              <td class="px-4 py-2 flex gap-2 justify-center items-center">
+              <button class="bg-red-500 text-white px-2 py-1 rounded">remover</button>
+              <button class="bg-green-500 text-black px-2 py-1 rounded">editar</button>
+          </td>
           </tr>
         `;
         
@@ -146,8 +162,7 @@ function verificarBibliotecario(){
             return response.json();
         })
         .then(data => {
-            addlinha([data]); // ✅ Adiciona na tabela com o retorno da API
-
+            addlinha([data]); 
             Swal.fire({
                 icon: 'success',
                 title: 'Sucesso!',
@@ -241,9 +256,6 @@ function editar(dadosbotao, event, id) {
       `<option value="${s}" ${s === statusAtual ? 'selected' : ''}>${s}</option>`
     ).join('');
 
-    // Gera options para bibliotecarios, marcando o atual
-    // bibliotecarioAtual é o nome exibido, precisamos achar o id correto
-    // Suponho que bibliotecarios = [{id:1, nome:"Fulano"}, ...]
     let bibliotecarioOptions = bibliotecarios.map(b =>
       `<option value="${b.id}" ${b.nome === bibliotecarioAtual ? 'selected' : ''}>${b.nome}</option>`
     ).join('');
