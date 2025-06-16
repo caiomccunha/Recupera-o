@@ -115,9 +115,8 @@ function verificarBibliotecario(){
               <td class="px-4 py-2">${element.status.replace(carregarStatus)}</td>
               <td class="px-4 py-2">${element.bibliotecario ? element.bibliotecario.nome : 'Não informado'}</td>
               <td class="px-4 py-2">${element.data_cadastro}</td>
-              <td class="px-4 py-2 flex gap-2 justify-center items-center">
-              <button class="bg-red-500 text-white px-2 py-1 rounded">remover</button>
-              <button class="bg-green-500 text-black px-2 py-1 rounded">editar</button>
+               <td class="px-4 py-2"><button  class="bg-red-500 text-white px-2 py-1 rounded" onclick="remover(this,${element.id} )">remover</button>
+              <button class ="bg-green-500 text-black px-2 py-1 rounded" onclick="editar(this, event,${element.id} )">editar</button></td>
           </td>
           </tr>
         `;

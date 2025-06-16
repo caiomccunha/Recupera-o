@@ -1,7 +1,7 @@
 package PROVA.model;
 
 public enum StatusLivro {
-    DISPONIVEL ("Disponível"),
+    DISPONÍVEL ("Disponível"),
     EMPRESTADO ("Emprestado"),
     RESERVADO ("Reservado");
 
